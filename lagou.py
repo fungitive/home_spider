@@ -2,6 +2,7 @@ import json
 import requests
 import xlwt
 import time
+import random
 from pyecharts import Bar
 
 # 获取存储职位信息的json对象，遍历获得公司名、福利待遇、工作地点、学历要求、工作类型、发布时间、职位名称、薪资、工作年限
@@ -11,13 +12,16 @@ def get_json(url, datas):
         "Referer": "https://www.lagou.com/jobs/list_Python?city=%E5%85%A8%E5%9B%BD&cl=false&fromSearch=true&labelWords=&suginput=",
         "Content-Type": "application/x-www-form-urlencoded;charset = UTF-8"
     }
+    proxies = ['http://163.204.243.184:9999']
     time.sleep(5)
     ses = requests.session()  # 获取session
+    print(ses)
     ses.headers.update(my_headers)  # 更新
     ses.get(
         "https://www.lagou.com/jobs/list_python?city=%E5%85%A8%E5%9B%BD&cl=false&fromSearch=true&labelWords=&suginput=")
-    content = ses.post(url=url, data=datas)
-
+    content = ses.post(url=url, data=datas, )
+    # # proxies = random.choice(proxies)
+    # print(proxies)
     result = content.json()
     print(result)
     info = result['content']['positionResult']['result']
